@@ -6,7 +6,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component, IInitial
     private static readonly object _lock = new object();
     private static bool _applicationIsQuitting = false;
 
-    private const string _logHeader = "--> Singleton:";
+    internal static readonly string _logHeader = "--> Singleton:";
 
     public static T Instance
     {
