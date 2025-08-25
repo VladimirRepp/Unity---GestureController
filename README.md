@@ -1,21 +1,33 @@
 # Unity---GestureController
-Gesture Controller for touchscreen 
+# Описание GestureController и Singleton
 
-Универсальный GestureController, поддерживающий:
-- Tap <br/>
-- Double Tap <br/>
-- Long Press <br/>
-- Swipe (все варианты) <br/>
-- Drag <br/>
-- SwipeEnd <br/>
-- Pinch <br/>
-- Rotate <br/>
+## GestureController
 
-Примеры использования:
+**GestureController** - это универсальный контроллер жестов для Unity, поддерживающий различные типы жестов:
+- Свайпы (влево, вправо, вверх, вниз)
+- Тапы (одиночные и двойные)
+- Долгие нажатия
+- Перетаскивание (Drag)
+- Масштабирование двумя пальцами (Pinch)
+- Вращение двумя пальцами (Rotate)
+
+### Ключевые особенности:
+- Кросс-платформенная поддержка (мышь/тачскрин)
+- Настраиваемые параметры (dead zones, timing)
+- Событийная система для всех типов жестов
+- Интеграция с системой Singleton
+
+### Использование:
+```csharp
+// Подписка на события
+GestureController.Instance.OnSwipeLeft += HandleSwipeLeft;
+GestureController.Instance.OnPinch += HandlePinch;
+```
+
 ``` cs
 private void Start()
 {
-    var swipe = SwipeInput.Instance;
+    var swipe = GestureController.Instance;
 
     swipe.OnTap += () => Debug.Log("Tap");
     swipe.OnDoubleTap += () => Debug.Log("Double Tap!");
@@ -29,7 +41,7 @@ private void Start()
 ``` cs
 private void Start()
 {
-    var swipe = SwipeInput.Instance;
+    var swipe = GestureController.Instance;
 
     // Обычные свайпы
     swipe.OnSwipeLeft += () => Debug.Log("Swipe Left");
@@ -60,7 +72,7 @@ private void Start()
 ``` cs
 private void Start()
 {
-    var swipe = SwipeInput.Instance;
+    var swipe = GestureController.Instance;
 
     swipe.OnSwipeLeft += () => Debug.Log("Свайп влево");
     swipe.OnSwipeRight += () => Debug.Log("Свайп вправо");
@@ -82,18 +94,35 @@ private void Start()
 private void Start()
 {
     // Подписка на события
-    SwipeInput.Instance.OnSwipe += dir => Debug.Log($"Свайп: {dir}");
+    GestureController.Instance.OnSwipe += dir => Debug.Log($"Свайп: {dir}");
 
     // Динамическое изменение DeadZone
-    SwipeInput.Instance.DeadZone = 200f; 
+    GestureController.Instance.DeadZone = 200f; 
 }
 ```
 
 ``` cs
 private void Start()
 {
-    SwipeInput.Instance.OnSwipeLeft += () => Debug.Log("Свайп влево");
-    SwipeInput.Instance.OnSwipeRight += () => Debug.Log("Свайп вправо");
-    SwipeInput.Instance.OnTap += () => Debug.Log("Тап!");
+    GestureController.Instance.OnSwipeLeft += () => Debug.Log("Свайп влево");
+    GestureController.Instance.OnSwipeRight += () => Debug.Log("Свайп вправо");
+    GestureController.Instance.OnTap += () => Debug.Log("Тап!");
 }
 ```
+
+## Singleton
+
+**Singleton** - это базовый класс для реализации шаблона Singleton в Unity с поддержкой:
+- Потокобезопасной инициализации
+- Автоматического создания экземпляров
+- Защиты от дублирования объектов
+- Сохранения между сценами (DontDestroyOnLoad)
+- Корректной обработки завершения приложения
+
+### Особенности реализации:
+- Ленивая инициализация
+- Интерфейс IInitialized для контроля инициализации
+- Предотвращение ошибок при уничтожении объектов
+- Логирование для отладки
+
+Оба компонента предназначены для создания надежной системы управления вводом в Unity-приложениях с поддержкой мультитач-жестов.
