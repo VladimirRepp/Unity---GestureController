@@ -18,12 +18,6 @@
 - Интеграция с системой Singleton
 
 ### Использование:
-```csharp
-// Подписка на события
-GestureController.Instance.OnSwipeLeft += HandleSwipeLeft;
-GestureController.Instance.OnPinch += HandlePinch;
-```
-
 ``` cs
 private void Start()
 {
@@ -107,6 +101,15 @@ private void Start()
     GestureController.Instance.OnSwipeLeft += () => Debug.Log("Свайп влево");
     GestureController.Instance.OnSwipeRight += () => Debug.Log("Свайп вправо");
     GestureController.Instance.OnTap += () => Debug.Log("Тап!");
+}
+```
+
+```csharp
+private void Start()
+{
+    // Подписка на события
+    GestureController.Instance.OnSwipeLeft += HandleSwipeLeft;
+    GestureController.Instance.OnPinch += HandlePinch;
 }
 ```
 
